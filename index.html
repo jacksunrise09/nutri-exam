@@ -972,9 +972,18 @@ function renderQ(){
   tEl.textContent=(q.t==='M'?'多选题（错选/漏选均不得分）':'单选题');
   tEl.className='q-type '+(q.t==='M'?'M':'S');
   var cb=$('caseBanner');
+  /* 根据题干关键词自动匹配案例背景 */
+  var caseKey=null;
+  var s=q.s||'';
+  if(/小明|该学龄/.test(s)) caseKey='C_XM';
+  else if(/该幼儿|含饭|块状食物|该3岁|幼儿/.test(s)) caseKey='C_YE';
+  else if(/王女士|孕中期|孕妇|孕期/.test(s)) caseKey='C_YF';
+  else if(/盐每日|运动频次增长|干预前.*盐|干预后.*盐/.test(s)) caseKey='C_YG';
+  else if(/小丽|乳母|产后/.test(s)) caseKey='C_LM';
   if(q.c&&CASES[q.c]){ cb.innerHTML=CASES[q.c]; cb.style.display='block'; }
+  else if(caseKey&&CASES[caseKey]){ cb.innerHTML=CASES[caseKey]; cb.style.display='block'; }
   else if(q.p==='K'&&SKILL_CASE[q.f]){
-    cb.innerHTML='<div style="font-weight:800;margin-bottom:4px">'+SKILL_CASE[q.f]+'</div><div style="font-size:13px;color:var(--ink-2)">本案例共4小题，每题5分。请结合该工作场景背景作答。</div>';
+    cb.innerHTML='<div style="font-weight:800;margin-bottom:4px">'+SKILL_CASE[q.f]+'</div><div style="font-size:13px;color:var(--ink-2)">请结合该工作场景背景作答。</div>';
     cb.style.display='block';
   }
   else{ cb.style.display='none'; cb.innerHTML=''; }
