@@ -678,11 +678,11 @@ var SKILL_CASE={
 var PART_NAMES={theory:'《理论知识》模拟考试',skill:'《专业技能》模拟考试'};
 /* 理论卷：70单选+15多选，按官方权重分配（共85题=100分） */
 var THEORY_PLAN={OF1:{s:3,m:1},OF2:{s:28,m:6},OF3:{s:7,m:1},OF4:{s:11,m:2},OF5:{s:11,m:2},OF6:{s:7,m:2},OF7:{s:3,m:1}};
-/* 技能卷：5个工作场景案例 × 4小题 = 20题 × 5分 = 100分 */
-var SKILL_PLAN={OF3:4,OF4:4,OF5:4,OF6:4,OF7:4};
+/* 技能卷：工作场景案例题 25题×4分 = 100分 */
+var SKILL_PLAN={OF3:4,OF4:5,OF5:9,OF6:5,OF7:2};
 var EXAM_CFG={
   theory:{title:'《理论知识》模拟考试',meta:'单选70×1分 + 多选15×2分 = 100分 ｜ 85题 ｜ 90分钟 ｜ 按官方模块题量出卷，优先未做题',minutes:90},
-  skill:{title:'《专业技能》模拟考试',meta:'5个工作场景案例 × 4小题 = 20题 × 5分 = 100分 ｜ 60分钟 ｜ 按官方模块题量出卷，优先未做题',minutes:60}
+  skill:{title:'《专业技能》模拟考试',meta:'工作场景案例题 25题×4分 = 100分 ｜ 60分钟 ｜ 按官方模块题量出卷，优先未做题',minutes:60}
 };
 var recentPart=null;
 
@@ -832,7 +832,7 @@ function startExam(part){
   recentPart=part; var cfg=EXAM_CFG[part];
   var questions=drawByPlan(part);
   beginSession('exam','exam',part,questions,cfg.minutes*60,true,
-    {single:(part==='theory'?1:5),multi:(part==='theory'?2:5)}, cfg.title, cfg.meta);
+    {single:(part==='theory'?1:4),multi:(part==='theory'?2:4)}, cfg.title, cfg.meta);
 }
 function beginSession(mode,kind,part,questions,remain,timerOn,perQ,title,meta){
   S.mode=mode; S.kind=kind; S.part=part; S.questions=questions;
